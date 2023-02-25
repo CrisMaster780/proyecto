@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% csrf_token %}
+
+
+{% if error %}
+<div id="content" class="alert alert-danger mt-1 p-4 d-flex offset-md-8 col-md-4" role="alert">
+   <h7>{{error}} Consulta el listado de los pagos!!</h7> 
+</div>
+{% endif %}
+
+<div class="container  p-1">
+
+    <form method="GET" action="{% url 'Pago' %}" class="d-flex offset-md-8 col-md-4">
+        <input class="form-control me-2 text-center" type="text" placeholder="Ingresa datos para la busqueda"
+            name="buscarpago">
+        <button type="submit" class="btn btn-danger">Buscar </a>
+    </form>
+</div>
+
+<main class="container border-0">
+
+    <div class="row p-1 border-0">
+        <div class="col-md-4 offset-md-4 border-0">
+            <form action="{% url 'Registrar' %}" method="post" class="card card-body text-center">
+                {% csrf_token %}
+                {% for l in consulta %}
+                <div class="mb-1">
+                    <label for="">Nro de Documento</label>
+                    <input type="text" style="text-align:center;border-color: black ;" value="{{l.cedula}}"
+                        class="form-control" readonly name="documento" required>
+                </div>
+                <div class="mb-1">
+                    <label for="">Nombre</label>
+                    <input type="text" style="text-align:center;border-color: black ;" class="form-control"
+                        name="nombre" required readonly value="{{l.nombre}}">
+                </div>
+                <div class="mb-1">
+                    <label for="">Apellido</label>
+                    <input type="text" style="text-align:center;border-color: black ;" class="form-control"
+                        name="apellido" required readonly value="{{l.apellido}}">
+                </div>
+                <div class="mb-1">
+                    <label for="">Mesa </label>
+                    <input type="text" style="text-align:center;border-color: black ;" class="form-control" name="mesa"
+                        required readonly value="{{l.mesa.descripcion}}">
+                </div>
+                <div class="mb-1">
+                    <label for="">Orden</label>
+                    <input type="text" style="text-align:center;border-color: black ;" class="form-control" name="orden"
+                        required readonly value="{{l.orden.descripcion}}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="">Monto Desembolso</label>
+                    <input type="number" style="text-align:center;border-color: black ;" class="form-control"
+                        name="monto" required>
+                </div>
+
+
+                <button class="btn btn-danger " type="submit" style="border-color: black;">Registrar</a>
+                    {% endfor %}
+
+            </form>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".content").fadeOut(1500);
+        }, 3000);
+    });
+</script>
+
+
+{% endblock %}
