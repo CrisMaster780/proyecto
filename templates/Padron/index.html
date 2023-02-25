@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% csrf_token %}
+
+
+<div class="col-md-4 offset-md-4 p-2">
+    <h3>Listado de Pagos</h3>
+</div>
+
+<div class="container  p-4">
+
+    <form method="GET"  class="d-flex offset-md-8 col-md-4">
+        <input class="form-control me-2 text-center" type="text" placeholder="Ingresa datos para la busqueda"
+            name="buscar" id="buscar">
+        <button type="submit" class="btn btn-danger">Buscar </a>
+    </form>
+</div>
+<div class="container">
+    <a href="{% url 'Pago' %}" class="btn btn-danger"> Registrar Desembolso</a>
+</div>
+
+<div class="container">
+    <table id="table" class="table table-striped table-hover p-4 ">
+        <thead>
+            <tr>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Mesa</th>
+                <th>Orden</th>
+                <th>Sucursal</th>
+                <th>Fecha</th>
+                <th class="text-center">Monto</th>
+            </tr>
+
+        </thead>
+        {% for l in lista %}
+        <tbody>
+            <td>{{l.persona.cedula}}</td>
+            <td>{{l.persona.nombre}}</td>
+            <td>{{l.persona.apellido}}</td>
+            <td>{{l.mesa}}</td>
+            <td>{{l.orden}}</td>
+            <td>{{l.sucursal.descripcion}}</td>
+            <td>{{l.fecha}}</td>
+
+            <td width="20%" class="table-success">
+                <input type="text" value="{{ l.monto_desembolso }}"
+                
+                class="form-control text-center " disabled>
+            </td>
+
+
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
