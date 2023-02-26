@@ -4,12 +4,14 @@ from padron.models import Persona
 from padron.models import Padron
 from django.db.models import Q
 from django.contrib import messages
+from padron.models import Sucursal
 
 
 
 def index(request):
     usuario = request.user
-    sucursal = request.session['0']
+    id_usu = request.user.id
+    estr = Sucursal.objects.filter(usuario__id__contains= id_usu).first()
     persona = Persona.objects.all()
 
     if request.method == 'GET':
@@ -24,38 +26,39 @@ def index(request):
             return render(request, 'Padron/index.html', {
                 'usuario': usuario,
                 'lista': padron,
-                'sucursal': sucursal
+                'sucursal': estr
             })
 
         return render(request, 'Padron/index.html', {
             'usuario': usuario,
             'lista': padron,
-            'sucursal': sucursal
+            'sucursal': estr
         })
     else:
         return render(request, 'Padron/index.html', {
             'usuario': usuario,
             'lista': padron,
-            'sucursal': sucursal
+            'sucursal': estr
         })
 
 
 def desembolso(request):
     usuario = request.user
-    sucursal = request.session['0']
+    id_usu = request.user.id
+    estr = Sucursal.objects.filter(usuario__id__contains= id_usu).first()
     persona = Persona.objects.all()
     padron = Padron.objects.all()
     if request.method == 'GET':
         return render(request, 'Padron/desembolso.html', {
             'usuario': usuario,
             'lista': padron,
-            'sucursal': sucursal
+            'sucursal': estr
         })
     else:
         return render(request, 'Padron/desembolso.html', {
             'usuario': usuario,
             'lista': padron,
-            'sucursal': sucursal
+            'sucursal': estr
         })
 
 
@@ -63,7 +66,8 @@ def buscarPago(request):
     _buscar_pago = request.GET.get('buscarpago')
     usuario = request.user
     persona = Persona.objects.all()
-    sucursal = request.session['0']
+    id_usu = request.user.id
+    estr = Sucursal.objects.filter(usuario__id__contains= id_usu).first()
     padron = Padron.objects.all()
     if _buscar_pago:
         persona = Persona.objects.filter(
@@ -72,18 +76,19 @@ def buscarPago(request):
         return render(request, 'Padron/desembolso.html', {
             'usuario': usuario,
             'consulta': persona,
-            'sucursal': sucursal,
+            'sucursal': estr,
         })
     else:
         return render(request, 'Padron/desembolso.html', {
             'usuario': usuario,
-            'sucursal': sucursal,
+            'sucursal': estr,
         })
 
 
 def registrar(request):
     usuario = request.user
-    sucursal = request.session['0']
+    id_usu = request.user.id
+    estr = Sucursal.objects.filter(usuario__id__contains= id_usu).first()
     padron = Padron.objects.all()
     persona = Persona.objects.all()
 
@@ -91,7 +96,7 @@ def registrar(request):
         print('entro en get')
         return render(request, 'Padron/desembolso.html', {
             'usuario': usuario,
-            'sucursal': sucursal,
+            'sucursal': estr,
 
         })
     else:
@@ -108,7 +113,7 @@ def registrar(request):
           
             return render(request, 'Padron/desembolso.html', {
             'usuario': usuario,
-            'sucursal': sucursal,
+            'sucursal': estr,
             
             'error': 'La persona ya tiene un Pago'
 

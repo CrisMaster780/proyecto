@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 
 
 
+
 class Sucursal(models.Model):
-    descripcion = models.CharField(max_length=200, default=1)
+    descripcion = models.CharField(max_length=200)
     estado = models.BooleanField(default=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 

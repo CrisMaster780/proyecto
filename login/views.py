@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.backends.db import SessionStore
 from padron.models import Sucursal
+import json
 
 
 def index(request):
@@ -28,20 +29,27 @@ def index(request):
             })
 
         else:
-            estr = request.POST.get('suc')
-            request.session[0] = estr
+            
             login(request, user)
+            id_usu = request.user.id
+            #estr = Sucursal.objects.filter(usuario__id__contains= id_usu).first()
+            
+
+            #print(estr)
+           # request.session[0] = estr
             return redirect('/principal')
 
 
 def principal(request):
     usuario = request.user.username
-    sucursal = request.session['0']
+    #sucursal = request.session['0']
+    id_usu = request.user.id
+    estr = Sucursal.objects.filter(usuario__id__contains= id_usu).first()
     titulo = 'Principal'
     return render(request, 'Login/principal.html', {
         'usuario': usuario,
         'titulo': titulo,
-        'sucursal': sucursal
+        'sucursal': estr
     })
 
 

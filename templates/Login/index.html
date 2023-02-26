@@ -36,16 +36,7 @@
                             class="form-control" style="text-align:center;border-color: black ;" type="password"
                             name="password">
                     </div>
-                    <div class="mb-3">
-                        <select name="suc" class="form-select text-center" aria-label="Default select example">
-                            <option  selected>Selecciona tu Sucursal</option>
-                            {% for s in sucursal %}
-                            <option  value="{{s.id}}">{{s.descripcion}}</option>
-                           {%endfor%}
-                          </select>
-                        
-
-                    </div>
+                  
 
                     <button class="btn btn-danger " style="border-color: black;">Acceder</button>
 
